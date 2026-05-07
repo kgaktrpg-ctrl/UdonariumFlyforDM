@@ -82,6 +82,7 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get isStealthMode(): boolean { return GameCharacter.isStealthMode; }
   get isGMMode(): boolean { return PeerCursor.myCursor && PeerCursor.myCursor.isGMMode; }
+  get isHost(): boolean { return (!Network.peer || !Network.peer.isOpen) ? true : (Network.peer as any).isAdmin; }
 
   get clipCss(): string {
     const rect = this.currentTable.gridClipRect;
@@ -440,12 +441,13 @@ export class GameTableComponent implements OnInit, OnDestroy, AfterViewInit {
       menuActions.push(ContextMenuSeparator);
     }
     Array.prototype.push.apply(menuActions, this.tabletopActionService.makeDefaultContextMenuActions(objectPosition));
-    menuActions.push(ContextMenuSeparator);
-    menuActions.push({
-      name: 'テーブル設定...', action: () => {
-        this.modalService.open(GameTableSettingComponent);
-      }
-    });
+    if (this.isHost) {
+      menuActions.push({
+        name: 'テーブル設定...', action: () => {
+          this.modalService.open(GameTableSettingComponent);
+        }
+      });
+    }
     this.contextMenuService.open(menuPosition, menuActions, this.currentTable.name);
   }
 
