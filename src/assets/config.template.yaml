@@ -1,5 +1,5 @@
 backend:
-  mode: skyway2023 #'skyway2023' or 'skyway'
+  mode: peerjs #'skyway2023' or 'skyway'
   url: https://{your-backend-hostname} #Your Backend API URL
 webrtc: #非推奨（旧SkyWay）
   key: aaaaaaaa-bbbb-ccccc-dddd-eeeeeeeeeeee #[deprecated] Your (old) SkyWay API key
