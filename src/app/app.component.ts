@@ -100,6 +100,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get otherPeers(): PeerCursor[] { return [PeerCursor.myCursor, ...Network.peers.filter(peer => peer.isOpen).map(peer => PeerCursor.findByPeerId(peer.peerId))].filter(peerCursor => peerCursor); /* ObjectStore.instance.getObjects(PeerCursor); */ }
   get isRoom(): boolean { return Network.peer?.isRoom; }
+  get isHost(): boolean { return (!Network.peer || !Network.peer.isOpen) ? true : (Network.peer as any).isAdmin; }
 
   private static _noticePlayer: AudioPlayer;
   static get noticePlayer(): AudioPlayer {
